@@ -1,5 +1,6 @@
 <%- | Boolean $analytics,
       Integer $https_port,
+      String[1] $public_hostname,
       String[1] $lidar_version,
       String[1] $image_prefix,
 | -%>
