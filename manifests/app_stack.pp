@@ -29,6 +29,10 @@
 # @param [String[1]] log_driver
 #   The log driver Docker will use
 #
+# @param [String[1]] public_hostname
+#   DNS name to use to access e. g. identity server in cloud environments 
+#   where fqdn points to an internel hostname not accessable from the outer world
+#
 # @param [Optional[Array[String[1]]]] docker_users
 #   Users to be added to the docker group on the system
 #
@@ -52,6 +56,7 @@ class lidar::app_stack (
   String[1] $image_prefix = 'puppet/lidar-',
   String[1] $lidar_version = '1.0.0-alpha',
   String[1] $log_driver = 'journald',
+  String[1] $public_hostname = $facts["networking"]["fqdn"],
   Optional[Array[String[1]]] $docker_users = undef,
 ){
   if $create_docker_group {
@@ -91,10 +96,11 @@ class lidar::app_stack (
       ensure  => file,
       mode    => '0440',
       content => epp('lidar/docker-compose.yaml.epp', {
-        'image_prefix'  => $image_prefix,
-        'lidar_version' => $lidar_version,
-        'https_port'    => $https_port,
-        'analytics'     => $analytics,
+        'image_prefix'    => $image_prefix,
+        'lidar_version'   => $lidar_version,
+        'https_port'      => $https_port,
+        'analytics'       => $analytics,
+        'public_hostname' => $public_hostname,
       }),
     ;
   }

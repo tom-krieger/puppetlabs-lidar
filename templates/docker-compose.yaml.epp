@@ -18,9 +18,9 @@ services:
     image: "<%= $image_prefix %>frontdoor:<%= $lidar_version %>"
     restart: always
     environment:
-      - IDENTITY=<%= $facts["networking"]["fqdn"] %>
-      - IDENTITY_SERVER=https://<%= $facts["networking"]["fqdn"] %>:<%= $https_port %>/auth/
-      - TOOL_DOMAIN=https://<%= $facts["networking"]["fqdn"] %>:<%= $https_port %>/
+      - IDENTITY=<%= $public_hostname %>
+      - IDENTITY_SERVER=https://<%= $public_hostname %>:<%= $https_port %>/auth/
+      - TOOL_DOMAIN=https://<%= $public_hostname %>:<%= $https_port %>/
     links:
       - identity
     ports:
@@ -77,8 +77,8 @@ services:
   ui:
     image: "<%= $image_prefix %>ui:<%= $lidar_version %>"
     environment:
-      - REACT_APP_QUERY_API=https://<%= $facts["networking"]["fqdn"] %>:<%= $https_port %>/query
-      - REACT_APP_IDENTITY=https://<%= $facts["networking"]["fqdn"] %>:<%= $https_port %>/auth
+      - REACT_APP_QUERY_API=https://<%= $public_hostname %>:<%= $https_port %>/query
+      - REACT_APP_IDENTITY=https://<%= $public_hostname %>:<%= $https_port %>/auth
       - REACT_APP_ANALYTICS_ENABLED=<%= $analytics %>
 
   query:
