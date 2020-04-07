@@ -29,11 +29,11 @@ class Puppet::Node::Facts::Lidar < Puppet::Node::Facts::Yaml
       begin
         Puppet.info 'Submitting facts to LiDAR'
         current_time = Time.now
-        send_facts(request, current_time.clone.utc)
-        filename = "/tmp/puppet-facts-#{self.host}.json"
+        filename = "/tmp/puppet-facts-1-#{self.host}.json"
         fh = File.open(filename, 'w')
         fh.write(request.to_json)
         fh.close()
+        send_facts(request, current_time.clone.utc)
       rescue StandardError => e
         Puppet.err "Could not send facts to LiDAR: #{e}\n#{e.backtrace}"
       end
