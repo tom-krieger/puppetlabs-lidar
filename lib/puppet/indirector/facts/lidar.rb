@@ -12,6 +12,7 @@ class Puppet::Node::Facts::Lidar < Puppet::Node::Facts::Yaml
 
   def profile(message, metric_id, &block)
     message = 'LiDAR: ' + message
+    Puppet.info "Message: #{message}"
     arity = Puppet::Util::Profiler.method(:profile).arity
     case arity
     when 1
