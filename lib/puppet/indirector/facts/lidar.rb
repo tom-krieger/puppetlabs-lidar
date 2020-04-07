@@ -26,6 +26,8 @@ class Puppet::Node::Facts::Lidar < Puppet::Node::Facts::Yaml
     # yaml cache goes first
     super(request)
 
+    Puppet.info 'LiDAR indirector save'
+
     profile('lidar_facts#save', [:lidar, :facts, :save, request.key]) do
       begin
         Puppet.info 'Submitting facts to LiDAR'
