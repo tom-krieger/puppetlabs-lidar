@@ -62,7 +62,7 @@ module Puppet::Util::Lidar
     facts.values = facts.values.dup
     facts.values[:trusted] = get_trusted_info(request.node)
 
-    Puppet.info "Facts of LiDAR: #{facts.values[:truested].to_json} |"
+    Puppet.info "Facts of LiDAR: #{facts.values[:trusted].to_json} |"
 
     inventory = facts.values['_puppet_inventory_1']
     package_inventory = inventory['packages'] if inventory.respond_to?(:keys)
@@ -88,7 +88,7 @@ module Puppet::Util::Lidar
 
     filename = "/tmp/puppet-facts-#{request.key}.json"
     fh = File.open(filename, 'w')
-    external = facts.values[:trusted][:external]
+    external = facts.values[:trusted]
     fh.write(external.to_json)
     fh.close()
 
