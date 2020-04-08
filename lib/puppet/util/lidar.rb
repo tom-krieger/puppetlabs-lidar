@@ -126,7 +126,7 @@ module Puppet::Util::Lidar
     facts.values = facts.values.dup
     data = {}
     data["@timestamp"] = time
-    data = data.merge(facts.value)
+    data = data.merge(facts.values[:trusted])
   
     Timeout::timeout(CONFIG[:timeout]) do
       json = data.to_json
