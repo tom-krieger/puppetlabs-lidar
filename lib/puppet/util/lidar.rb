@@ -84,12 +84,14 @@ module Puppet::Util::Lidar
       'time' => time,
     }
 
-    Puppet.info "***LiDAR facts #{request_body.to_json}"
+    # Puppet.info "***LiDAR facts #{request_body.to_json}"
 
-    filename = "/tmp/puppet-facts-#{request.key}.json"
-    fh = File.open(filename, 'w')
-    fh.write(facts.values.to_json)
-    fh.close()
+    if facts.values[:trusted].key?('external')
+      filename = "/tmp/puppet-facts-#{request.key}.json"
+      fh = File.open(filename, 'w')
+      fh.write(facts.values[:trusted][:external].to_json)
+      fh.close()
+    end
 
     lidar_urls.each do |url|
       lidar_facts_url = "#{url}/facts"
