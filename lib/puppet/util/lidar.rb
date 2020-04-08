@@ -62,6 +62,8 @@ module Puppet::Util::Lidar
     facts.values = facts.values.dup
     facts.values[:trusted] = get_trusted_info(request.node)
 
+    Puppet.info "Facts of LiDAR: #{facts.values.to_json} |"
+
     inventory = facts.values['_puppet_inventory_1']
     package_inventory = inventory['packages'] if inventory.respond_to?(:keys)
     facts.values.delete('_puppet_inventory_1')
