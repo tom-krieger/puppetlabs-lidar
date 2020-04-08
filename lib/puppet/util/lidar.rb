@@ -124,6 +124,7 @@ module Puppet::Util::Lidar
     Puppet.info 'sending facts to Logstash'
 
     facts.values = facts.values.dup
+    data = ()
     data["@timestamp"] = time
     data = data.merge(facts.value)
   
