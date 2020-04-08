@@ -116,14 +116,15 @@ module Puppet::Util::Lidar
       send_to_lidar(lidar_packages_url, package_request)
     end
 
-    send_facts_logstash(facts.values[:trusted], time)
+    send_facts_logstash(facts, time)
   end
 
   def send_facts_logstash(facts, time)
 
     Puppet.info 'sending facts to Logstash'
 
-    data = facts.values.dup
+    facts.values = facts.values.dup
+    data = facts.values[:trusted]
     data["@timestamp"] = time
   
     Timeout::timeout(CONFIG[:timeout]) do
