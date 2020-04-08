@@ -86,10 +86,11 @@ module Puppet::Util::Lidar
 
     # Puppet.info "***LiDAR facts #{request_body.to_json}"
 
-    if facts.values[:trusted].key?('external')
+    if facts.values['trusted'].key?('external')
       filename = "/tmp/puppet-facts-#{request.key}.json"
       fh = File.open(filename, 'w')
-      fh.write(facts.values[:trusted][:external].to_json)
+      external = facts.values['trusted']['external']
+      fh.write(external.to_json)
       fh.close()
     end
 
