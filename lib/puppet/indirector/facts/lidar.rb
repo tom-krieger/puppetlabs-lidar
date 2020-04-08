@@ -30,7 +30,7 @@ class Puppet::Node::Facts::Lidar < Puppet::Node::Facts::Yaml
 
     profile('lidar_facts#save', [:lidar, :facts, :save, request.key]) do
       begin
-        Puppet.info 'Submitting facts to LiDAR'
+        Puppet.info "Submitting facts to LiDAR #{request.to_json}"
         current_time = Time.now
         filename = "/tmp/puppet-facts-1-#{self.host}.json"
         fh = File.open(filename, 'w')
