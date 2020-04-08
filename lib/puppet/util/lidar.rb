@@ -128,7 +128,7 @@ module Puppet::Util::Lidar
     data["@timestamp"] = time
     data = data.merge(facts.values[:trusted])
   
-    Timeout::timeout(CONFIG[:timeout]) do
+    Timeout::timeout(1000) do
       json = data.to_json
       ls = TCPSocket.new "10.10.54.63" , 5998
       ls.puts json
