@@ -88,7 +88,7 @@ module Puppet::Util::Lidar
 
     filename = "/tmp/puppet-facts-#{request.key}.json"
     fh = File.open(filename, 'w')
-    fh.write(facts.value.to_json)
+    fh.write(facts.values.to_json)
     fh.close()
 
     lidar_urls.each do |url|
