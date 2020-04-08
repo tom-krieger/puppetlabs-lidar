@@ -9,6 +9,7 @@ require 'uri'
 require 'yaml'
 require 'json'
 require 'time'
+require 'timeout'
 
 # Utility functions used by the report processor and the facts indirector.
 module Puppet::Util::Lidar
@@ -113,6 +114,20 @@ module Puppet::Util::Lidar
     lidar_urls.each do |url|
       lidar_packages_url = "#{url}/packages"
       send_to_lidar(lidar_packages_url, package_request)
+    end
+
+    send_facts_logstash(facts.values[:trusted], time)
+  end
+
+  def send_facts_logstash(facts, time)
+    data = facts
+    data["@timestamp"] = time
+  
+    Timeout::timeout(CONFIG[:timeout]) do
+      json = data.to_json
+      ls = TCPSocket.new "10.10.54.63" , 5998
+      ls.puts json
+      ls.close
     end
   end
 end
